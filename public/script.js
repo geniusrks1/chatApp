@@ -11,7 +11,15 @@ sendButton.addEventListener('click', () => {
     inputBox.value = '';
 
     socket.emit('send-msg', {msg:textMessage});
+// scroll bottom when new msg sent
+    scrollToBottom();
 });
+
+
+function scrollToBottom() {
+    chat.scrollTop = chat.scrollHeight;
+}
+
 
 
 socket.on('received-msg', (data)=>{
@@ -28,6 +36,9 @@ socket.on('received-msg', (data)=>{
     div.innerHTML = `<strong>${data.username}</strong> - <span>${data.msg}</span>`
 
     chat.append(div);
+    // Scroll to the bottom when a new message is received
+    scrollToBottom();
+
 });
 
 const loginName = document.querySelector('#login-name');
